@@ -4,25 +4,50 @@
 <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
 <!-- AR.js ライブラリの読み込み -->
 <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.0.8/aframe/build/aframe-ar.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <body style='margin:0px; overflow:hidden;'>
 <!-- こっからA-Frame -->
 <a-scene embedded arjs="debugUIEnabled:false;">
-<!-- こっからARの世界。マーカー上になにを展開するかを書く -->
-    <!-- ダークブルー -->
-    <a-marker preset="custom" type="pattern" url="marker/pattern-H.patt">
-        <a-sphere scale=".25 .25 .25" position="0 .5 0" color="#00008b">
-            <a-animation attribute="position" to="0 1 0" direction="alternate" dur="2000" repeat="indefinite">
-            </a-animation>
-        </a-sphere>
-    </a-marker>
+    <!-- こっからARの世界。マーカー上になにを展開するかを書く -->
+    <div class='element-marker'>
+        <!-- H -->
+        <a-marker preset="custom" type="pattern" url="marker/pattern-H.patt">
+            <a-sphere scale=".25 .25 .25" position="0 .5 0" color="#00008b">
+                <a-animation attribute="position" to="0 1 0" direction="alternate" dur="2000" repeat="indefinite">
+                </a-animation>
+            </a-sphere>
+        </a-marker>
 
-    <!-- 黄色 -->
-    <a-marker preset="custom" type="pattern" url="marker/pattern-He.patt">
-        <a-sphere scale=".25 .25 .25" position="0 .5 0" color="#ffff00">
-            <a-animation attribute="position" to="0 1 0" direction="alternate" dur="2000" repeat="indefinite">
-            </a-animation>
-        </a-sphere>
-    </a-marker>
+        <a-marker preset="custom" type="pattern" url="marker/pattern-H2.patt">
+            <a-sphere scale=".25 .25 .25" position="0 .5 0" color="#00008b">
+                <a-animation attribute="position" to="0 1 0" direction="alternate" dur="2000" repeat="indefinite">
+                </a-animation>
+            </a-sphere>
+        </a-marker>
+
+        <!-- He -->
+        <a-marker preset="custom" type="pattern" url="marker/pattern-He.patt">
+            <a-sphere scale=".25 .25 .25" position="0 .5 0" color="#ffff00">
+                <a-animation attribute="position" to="0 1 0" direction="alternate" dur="2000" repeat="indefinite">
+                </a-animation>
+            </a-sphere>
+        </a-marker>
+
+        <!-- Li -->
+        <a-marker preset="custom" type="pattern" url="marker/pattern-Li.patt">
+            <a-sphere scale=".25 .25 .25" position="0 .5 0" color="#ffff00">
+                <a-animation attribute="position" to="0 1 0" direction="alternate" dur="2000" repeat="indefinite">
+                </a-animation>
+            </a-sphere>
+        </a-marker>
+        
+        <!-- Be -->
+        <a-marker preset="custom" type="pattern" url="marker/pattern-Be.patt">
+            <a-sphere scale=".25 .25 .25" position="0 .5 0" color="#ffff00">
+                <a-animation attribute="position" to="0 1 0" direction="alternate" dur="2000" repeat="indefinite">
+                </a-animation>
+            </a-sphere>
+        </a-marker>
     
     <!-- arなのでこんな感じでカメラが必要らしい。 -->
     <a-entity camera></a-entity>
