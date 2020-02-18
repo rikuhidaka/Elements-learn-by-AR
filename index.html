@@ -5,6 +5,9 @@
 <!-- AR.js ライブラリの読み込み -->
 <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.0.8/aframe/build/aframe-ar.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- tracking.js ライブラリ読み込み -->
+<script src="tracking.js-master/build/tracking-min.js"></script>
+<script src="tracking.js-master/"></script>
 <body style='margin:0px; overflow:hidden;'>
 <!-- こっからA-Frame -->
 <a-scene embedded arjs="debugUIEnabled:false;">
@@ -72,7 +75,7 @@
         var tracker = new tracking.ColorTracker(['yellow', 'purple']);
         tracker.setMinDimension(30);
 
-        tracking.track('#arjs', tracker);
+        tracking.track('#arjs-video', tracker);
 
         tracker.on('track', function(event) {
         context.clearRect(0, 0, canvas.width, canvas.height);
