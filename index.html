@@ -9,7 +9,6 @@
 <!-- こっからA-Frame -->
 <a-scene embedded arjs="debugUIEnabled:false;">
     <!-- こっからARの世界。マーカー上になにを展開するかを書く -->
-    <div class='element-marker'>
         <!-- H -->
         <a-marker preset="custom" type="pattern" url="marker/pattern-H.patt">
             <a-sphere scale=".25 .25 .25" position="0 .5 0" color="#00008b">
@@ -48,7 +47,6 @@
                 </a-animation>
             </a-sphere>
         </a-marker>
-    
     <!-- arなのでこんな感じでカメラが必要らしい。 -->
     <a-entity camera></a-entity>
 </a-scene>
