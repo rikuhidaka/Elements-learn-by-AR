@@ -45,6 +45,10 @@ let processor = {
     },
 
     doLoad: function() {
+        $.getJSON('../data/element.json', function(data) {
+            this.elements_data = data;
+            console.log(this.elements_data);
+        });
         this.video = document.querySelector('video');
         this.canvas = document.getElementById('canvas');
         this.context = this.canvas.getContext('2d');
@@ -70,7 +74,7 @@ let processor = {
         this.context.drawImage(this.video, 0, 0, this.width, this.height);
         var imageData = this.context.getImageData(0, 0, this.width, this.height);
         var markers = this.detector.detect(imageData);
-        console.log(markers);
+        // console.log(markers);
         $('#scene').empty();
         var centor_x, centor_y;
         for (let i = 0; i < markers.length; i++) {
