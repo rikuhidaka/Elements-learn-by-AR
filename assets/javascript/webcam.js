@@ -1,4 +1,14 @@
-const constraints = { audio: false, video: { width: 800, height: 600 } };
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+var URL = window.URL || window.webkitURL;
+var RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+var RTCSessionDescription =
+    window.RTCSessionDescription || window.webkitRTCSessionDescription || window.mozRTCSessionDescription;
+var RTCIceCandidate = window.RTCIceCandidate || window.webkitRTCIceCandidate || window.mozRTCIceCandidate;
+
+const constraints = {
+    audio: false,
+    video: { width: 800, height: 600, facingMode: 'environment' },
+};
 
 function drawCircle(ctx, x, y, scale, color) {
     ctx.beginPath();
@@ -84,3 +94,19 @@ let processor = {
 document.addEventListener('DOMContentLoaded', () => {
     processor.doLoad();
 });
+
+// getVideoSources(function(cam) {
+//     console.log('cam', cam);
+//     var b = document.createElement('input');
+//     b.type = 'button';
+//     b.value = cam.name;
+//     b.onclick = getMain(cam.id);
+//     control.appendChild(b);
+//     console.log('add button');
+// });
+
+// function getMain(cam_id) {
+//     return function() {
+//         main(cam_id);
+//     };
+// }
