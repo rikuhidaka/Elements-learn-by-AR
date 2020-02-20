@@ -7,7 +7,7 @@ var RTCIceCandidate = window.RTCIceCandidate || window.webkitRTCIceCandidate || 
 
 const constraints = {
     audio: false,
-    video: { width: 800, height: 600, facingMode: 'environment' },
+    video: { facingMode: 'environment' },
 };
 
 function drawCircle(ctx, x, y, scale, color) {
@@ -50,11 +50,15 @@ let processor = {
         this.context = this.canvas.getContext('2d');
         this.detector = new AR.Detector();
         let self = this;
+        $('#canvas').attr({
+            width: window.innerWidth,
+            height: window.innerHeight,
+        });
         this.video.addEventListener(
             'play',
             function() {
-                self.width = 800;
-                self.height = 600;
+                self.width = window.innerWidth;
+                self.height = window.innerHeight;
                 self.timerCallback();
             },
             false
@@ -94,19 +98,3 @@ let processor = {
 document.addEventListener('DOMContentLoaded', () => {
     processor.doLoad();
 });
-
-// getVideoSources(function(cam) {
-//     console.log('cam', cam);
-//     var b = document.createElement('input');
-//     b.type = 'button';
-//     b.value = cam.name;
-//     b.onclick = getMain(cam.id);
-//     control.appendChild(b);
-//     console.log('add button');
-// });
-
-// function getMain(cam_id) {
-//     return function() {
-//         main(cam_id);
-//     };
-// }
