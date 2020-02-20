@@ -1,9 +1,10 @@
 <!doctype HTML>
 <html>
-<!-- openCV -->
-<script src="https://docs.opencv.org/4.2.0/opencv.js"></script>
+<!-- arucojs -->
 <script src="assets/javascript/aruco.js"></script>
 <script src="assets/javascript/cv.js"></script>
+<script src="assets/javascript/jquery-3.4.1.min.js"></script>
+<script src="assets/javascript/webcam.js"></script>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="assets/css" href="main.css">
@@ -12,10 +13,9 @@
 
 <body>
     <video id="video" width="0" height="0" autoplay></video>
-    <div>
-        <canvas id="canvas" width="400" height="300"></canvas>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <div id='scene'>
     </div>
-      <script src="assets/javascript/webcam.js"></script>
 </body>
 
 </html>

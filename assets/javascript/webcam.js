@@ -1,5 +1,12 @@
 const constraints = { audio: false, video: { width: 800, height: 600 } };
 
+function drawCircle(ctx, x, y, scale, color) {
+    ctx.beginPath();
+    ctx.arc(x, y, scale, 0, 2 * Math.PI, false);
+    ctx.fillStyle = color;
+    ctx.fill();
+}
+
 // webcamera → video
 navigator.mediaDevices
     .getUserMedia(constraints)
@@ -36,8 +43,8 @@ let processor = {
         this.video.addEventListener(
             'play',
             function() {
-                self.width = 400;
-                self.height = 300;
+                self.width = 800;
+                self.height = 600;
                 self.timerCallback();
             },
             false
@@ -45,10 +52,32 @@ let processor = {
     },
 
     computeFrame: function() {
+        this.context.clearRect(0, 0, this.width, this.height);
         this.context.drawImage(this.video, 0, 0, this.width, this.height);
         var imageData = this.context.getImageData(0, 0, this.width, this.height);
         var markers = this.detector.detect(imageData);
         console.log(markers);
+        $('#scene').empty();
+        var centor_x, centor_y;
+        for (let i = 0; i < markers.length; i++) {
+            if (typeof markers[i] === 'undefined') {
+                console.log('undefined');
+            } else {
+                centor_x = markers[i].corners[0].x + (markers[i].corners[2].x - markers[i].corners[0].x) / 2;
+                centor_y = markers[i].corners[0].y + (markers[i].corners[2].y - markers[i].corners[0].y) / 2;
+
+                $('#scene').append('<p>id:' + markers[i].id + '</br>x:' + centor_x + ', y:' + centor_y + '</p>');
+                drawCircle(
+                    this.context,
+                    centor_x,
+                    centor_y,
+                    (markers[i].corners[2].x - markers[i].corners[0].x) / 3,
+                    '#ff2626'
+                );
+                centor_x = 0;
+                centor_y = 0;
+            }
+        }
     },
 };
 
