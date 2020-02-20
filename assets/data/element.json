@@ -1,80 +1,93 @@
 {
-    "H":{
-        "name":"Hydrogen",
-        "color":"white",
-        "colorcode":"#ffffff",
-        "number":1
+    "H": {
+        "id": 0,
+        "name": "Hydrogen",
+        "color": "white",
+        "colorcode": "#ffffff",
+        "number": 1
     },
-    "C":{
-        "name":"Carbon",
-        "color":"black",
-        "colorcode":"#000000",
-        "number":6
+    "C": {
+        "id": 1,
+        "name": "Carbon",
+        "color": "black",
+        "colorcode": "#000000",
+        "number": 6
     },
-    "N":{
-        "name":"Nitrogen",
-        "color":"blue",
-        "colorcode":"#0000ff",
-        "number":7
+    "N": {
+        "id": 2,
+        "name": "Nitrogen",
+        "color": "blue",
+        "colorcode": "#0000ff",
+        "number": 7
     },
-    "O":{
-        "name":"Oxygen",
-        "color":"red",
-        "colorcode":"#ff0000",
-        "number":8
+    "O": {
+        "id": 3,
+        "name": "Oxygen",
+        "color": "red",
+        "colorcode": "#ff0000",
+        "number": 8
     },
-    "Na":{
-        "name":"Sodium",
-        "color":"slateblue",
-        "colorcode":"#6a5acd",
-        "number":11
+    "Na": {
+        "id": 4,
+        "name": "Sodium",
+        "color": "slateblue",
+        "colorcode": "#6a5acd",
+        "number": 11
     },
-    "Mg":{
-        "name":"Magnesium",
-        "color":"greenyellow",
-        "colorcode":"adff2f",
-        "number":12
+    "Mg": {
+        "id": 5,
+        "name": "Magnesium",
+        "color": "greenyellow",
+        "colorcode": "adff2f",
+        "number": 12
     },
-    "S":{
-        "name":"Sulfur",
-        "color":"goldenrod",
-        "colorcode":"#daa520",
-        "number":16
+    "S": {
+        "id": 6,
+        "name": "Sulfur",
+        "color": "goldenrod",
+        "colorcode": "#daa520",
+        "number": 16
     },
-    "Cl":{
-        "name":"Chlorine",
-        "color":"limegreen",
-        "colorcode":"32cd32",
-        "number":17
+    "Cl": {
+        "id": 7,
+        "name": "Chlorine",
+        "color": "limegreen",
+        "colorcode": "32cd32",
+        "number": 17
     },
-    "Ca":{
-        "name":"Calcium",
-        "color":"lawngreen",
-        "colorcode":"#7cfc00",
-        "number":20
+    "Ca": {
+        "id": 8,
+        "name": "Calcium",
+        "color": "lawngreen",
+        "colorcode": "#7cfc00",
+        "number": 20
     },
-    "Fe":{
-        "name":"Iron",
-        "color":"orangered",
-        "colorcode":"ff4500",
-        "number":26
+    "Fe": {
+        "id": 9,
+        "name": "Iron",
+        "color": "orangered",
+        "colorcode": "ff4500",
+        "number": 26
     },
-    "Cu":{
-        "name":"Copper",
-        "color":"chocolate",
-        "colorcode":"#d2691e",
-        "number":29
+    "Cu": {
+        "id": 10,
+        "name": "Copper",
+        "color": "chocolate",
+        "colorcode": "#d2691e",
+        "number": 29
     },
-    "Zn":{
-        "name":"Zinc",
-        "color":"steelblue",
-        "colorcode":"4682b4",
-        "number":30
+    "Zn": {
+        "id": 11,
+        "name": "Zinc",
+        "color": "steelblue",
+        "colorcode": "4682b4",
+        "number": 30
     },
-    "Ba":{
-        "name":"Barium",
-        "color":"olivedrab",
-        "colorcode":"#6b8e23",
-        "number":56
+    "Ba": {
+        "id": 12,
+        "name": "Barium",
+        "color": "olivedrab",
+        "colorcode": "#6b8e23",
+        "number": 56
     }
 }
