@@ -96,12 +96,43 @@ const elements_data = [{
         number: 30,
     },
     {
+        abbr: 'Ag',
+        name: 'Silver',
+        color: 'lavender',
+        colorcode: '#e6e6fa',
+        number: 47
+    },
+    {
         abbr: 'Ba',
         name: 'Barium',
         color: 'olivedrab',
         colorcode: '#6b8e23',
         number: 56,
     },
+    {
+        abbr: 'O2',
+        name: 'Oxygen2',
+        color: 'red',
+        colorcode: '#ff0000',
+    },
+    {
+        abbr: 'H2',
+        name: 'Hydrogen2',
+        color: 'white',
+        colorcode: '#ffffff',
+    },
+    {
+        abbr: 'Cl2',
+        name: 'Chlorine2',
+        color: 'limegreen',
+        colorcode: '32cd32',
+    },
+    {
+        abbr: 'Ag2',
+        name: 'Silver2',
+        color: 'lavender',
+        colorcode: '#e6e6fa',
+    }
 ];
 
 function distance(x0, y0, x1, y1) {
@@ -121,36 +152,34 @@ function drawElement(ctx, x, y, scale, color, name) {
 }
 
 // help me!!!!!!!!!!!!!!!!!!!!!!!!
-function chemicalReaction(element_0, elemnet_1, position_x, position_y) {
-    var name_0 = elements_data[element_0.id].abbr;
-    var name_1 = elements_data[elemnet_1.id].abbr;
-    switch (name_0) {
-        case 'H':
-            switch (name_1) {
-                case 'H':
-                    drawElement();
-                    break;
+// function chemicalReaction(id_0, id_1) {
+//     var element_0 = elements_data[id_0].abbr;
+//     var element_1 = elements_data[id_1].abbr;
+//     switch (element_0) {
+//         case 'H':
+//             switch (element_1) {
+//                 case 'H':
+//                     break;
 
-                default:
-                    console.log(name_0 + ' × ' + name_1 + ' is not chemical reaction');
-                    break;
-            }
-            break;
+//                 default:
+//                     console.log(element_0 + ' × ' + element_1 + ' is not chemical reaction');
+//                     break;
+//             }
+//             break;
 
-        case 'C':
-            switch (name_1) {
-                case 'C':
-                    break;
+//         case 'C':
+//             switch (element_1) {
+//                 case 'C':
+//                     break;
+//                 default:
+//                     break;
+//             }
 
-                default:
-                    break;
-            }
-
-        default:
-            console.log(name_0 + ' × ' + name_1 + ' is not chemical reaction');
-            break;
-    }
-}
+//         default:
+//             console.log(element_0 + ' × ' + element_1 + ' is not chemical reaction');
+//             break;
+//     }
+// }
 
 // webcamera → video
 navigator.mediaDevices
