@@ -100,7 +100,7 @@ const elements_data = [{
         name: 'Silver',
         color: 'lavender',
         colorcode: '#e6e6fa',
-        number: 47
+        number: 47,
     },
     {
         abbr: 'Ba',
@@ -132,7 +132,7 @@ const elements_data = [{
         name: 'Silver2',
         color: 'lavender',
         colorcode: '#e6e6fa',
-    }
+    },
 ];
 
 function distance(x0, y0, x1, y1) {
@@ -141,7 +141,12 @@ function distance(x0, y0, x1, y1) {
 
 // 元素を描く
 function drawElement(ctx, x, y, scale, color, name) {
-    ctx.beginPath();
+    if (count < 100) {
+        count = 0;
+        ctx.beginPath();
+    } else {
+        count++;
+    }
     ctx.arc(x, y, scale / 2.5, 0, 2 * Math.PI, false);
     ctx.fillStyle = color;
     ctx.fill();
@@ -152,34 +157,9 @@ function drawElement(ctx, x, y, scale, color, name) {
 }
 
 // help me!!!!!!!!!!!!!!!!!!!!!!!!
-// function chemicalReaction(id_0, id_1) {
-//     var element_0 = elements_data[id_0].abbr;
-//     var element_1 = elements_data[id_1].abbr;
-//     switch (element_0) {
-//         case 'H':
-//             switch (element_1) {
-//                 case 'H':
-//                     break;
+function chemicalReaction() {}
 
-//                 default:
-//                     console.log(element_0 + ' × ' + element_1 + ' is not chemical reaction');
-//                     break;
-//             }
-//             break;
-
-//         case 'C':
-//             switch (element_1) {
-//                 case 'C':
-//                     break;
-//                 default:
-//                     break;
-//             }
-
-//         default:
-//             console.log(element_0 + ' × ' + element_1 + ' is not chemical reaction');
-//             break;
-//     }
-// }
+var count = 0;
 
 // webcamera → video
 navigator.mediaDevices
@@ -216,13 +196,13 @@ let processor = {
         let self = this;
         $('#canvas').attr({
             width: 800,
-            height: 600,
+            height: 800,
         });
         this.video.addEventListener(
             'play',
             function() {
                 self.width = 800;
-                self.height = 600;
+                self.height = 800;
                 self.timerCallback();
             },
             false
@@ -239,10 +219,11 @@ let processor = {
         // マーカーを検出
         var markers = this.detector.detect(imageData);
         var dist;
-        console.log(markers);
-        $('#scene').empty();
+        // console.log(markers);
+        // $('#scene').empty();
         var centor_x,
             centor_y,
+            scale,
             marker_width,
             marker_height,
             elements_x = [],
@@ -252,17 +233,12 @@ let processor = {
             if (typeof markers[i] === 'undefined') {
                 console.log('undefined');
             } else {
-                if (markers[i].corners[2].y - markers[i].corners[0].y >= 0) {
-                    marker_width = markers[i].corners[2].y - markers[i].corners[0].y;
-                    marker_height = markers[i].corners[2].x - markers[i].corners[0].x;
-                    centor_x = markers[i].corners[0].x + marker_width / 2;
-                    centor_y = markers[i].corners[0].y + marker_height / 2;
-                } else {
-                    marker_width = markers[i].corners[0].y - markers[i].corners[2].y;
-                    marker_height = markers[i].corners[0].x - markers[i].corners[2].x;
-                    centor_x = markers[i].corners[2].x + marker_width / 2;
-                    centor_y = markers[i].corners[2].y + marker_height / 2;
-                }
+                marker_width = Math.abs(markers[i].corners[2].y - markers[i].corners[0].y);
+                marker_height = Math.abs(markers[i].corners[2].x - markers[i].corners[0].x);
+                centor_x = (markers[i].corners[2].x + markers[i].corners[0].x) / 2;
+                centor_y = (markers[i].corners[2].y + markers[i].corners[0].y) / 2;
+
+                scale = Math.max(marker_height, marker_width);
 
                 $('#scene').append('<p>id:' + markers[i].id + '</br>x:' + centor_x + ', y:' + centor_y + '</p>');
                 if (elements_data[markers[i].id]) {
@@ -270,7 +246,7 @@ let processor = {
                         this.context,
                         centor_x,
                         centor_y,
-                        marker_height,
+                        scale,
                         elements_data[markers[i].id].colorcode,
                         elements_data[markers[i].id].abbr
                     );
@@ -281,9 +257,12 @@ let processor = {
                 centor_y = 0;
             }
         }
-        var position_x,
-            position_y,
-            elements = [];
+        var position_x = 0,
+            position_y = 0,
+            elements = [],
+            near_elements_x = [],
+            near_elements_y = [];
+
         for (let i = 0; i < elements_x.length; i++) {
             elements.push(elements_data[markers[i].id].abbr);
             for (let j = 0; j < elements_x.length; j++) {
@@ -295,9 +274,19 @@ let processor = {
                 }
             }
             if (elements.length > 1) {
-                chemicalReaction(elements, position_x, position_y);
+                for (let i = 0; i < elements.length; i++) {
+                    position_x += near_elements_x[i];
+                    position_y += near_elements_y[i];
+                }
+
+                chemicalReaction(this.context, elements.sort(), position_x, position_y);
             }
+            position_x = 0;
+            position_y = 0;
         }
+        elements = [];
+        near_elements_x = [];
+        near_elements_y = [];
         elements_x = [];
         elements_y = [];
     },
