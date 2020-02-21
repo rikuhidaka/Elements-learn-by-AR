@@ -135,6 +135,10 @@ const elements_data = [{
     }
 ];
 
+function distance(x0, y0, x1, y1) {
+    return Math.sqrt((x0 - x1) * (x0 - x1) + (y0 - y1) * (y0 - y1));
+}
+
 // 元素を描く
 function drawElement(ctx, x, y, scale, color, name) {
     ctx.beginPath();
@@ -167,7 +171,6 @@ function drawElement(ctx, x, y, scale, color, name) {
 //             switch (element_1) {
 //                 case 'C':
 //                     break;
-
 //                 default:
 //                     break;
 //             }
@@ -249,10 +252,17 @@ let processor = {
             if (typeof markers[i] === 'undefined') {
                 console.log('undefined');
             } else {
-                marker_width = markers[i].corners[2].y - markers[i].corners[0].y;
-                marker_height = markers[i].corners[2].x - markers[i].corners[0].x;
-                centor_x = markers[i].corners[0].x + marker_width / 2;
-                centor_y = markers[i].corners[0].y + marker_height / 2;
+                if (markers[i].corners[2].y - markers[i].corners[0].y >= 0) {
+                    marker_width = markers[i].corners[2].y - markers[i].corners[0].y;
+                    marker_height = markers[i].corners[2].x - markers[i].corners[0].x;
+                    centor_x = markers[i].corners[0].x + marker_width / 2;
+                    centor_y = markers[i].corners[0].y + marker_height / 2;
+                } else {
+                    marker_width = markers[i].corners[0].y - markers[i].corners[2].y;
+                    marker_height = markers[i].corners[0].x - markers[i].corners[2].x;
+                    centor_x = markers[i].corners[2].x + marker_width / 2;
+                    centor_y = markers[i].corners[2].y + marker_height / 2;
+                }
 
                 $('#scene').append('<p>id:' + markers[i].id + '</br>x:' + centor_x + ', y:' + centor_y + '</p>');
                 if (elements_data[markers[i].id]) {
@@ -271,19 +281,21 @@ let processor = {
                 centor_y = 0;
             }
         }
+        var position_x,
+            position_y,
+            elements = [];
         for (let i = 0; i < elements_x.length; i++) {
-            for (let j = i + 1; j < elements_x.length; j++) {
-                dist =
-                    (elements_x[i] - elements_x[j]) * (elements_x[i] - elements_x[j]) +
-                    (elements_y[i] - elements_y[j]) * (elements_y[i] - elements_y[j]);
-                // 2点間の距離でしきい値より小さければ反応する
-                if (dist < 5000) {
-                    if (markers[i].id < markers[j].id) {
-                        chemicalReaction(markers[i].id, markers[j].id);
-                    } else {
-                        chemicalReaction(markers[j].id, markers[i].id);
+            elements.push(elements_data[markers[i].id].abbr);
+            for (let j = 0; j < elements_x.length; j++) {
+                if (i != j) {
+                    // 2点間の距離でしきい値より小さければ反応する
+                    if (distance(elements_x[i], elements_y[i], elements_x[j], elements_y[j]) < 80) {
+                        elements.push(elements_data[markers[j].id].abbr);
                     }
                 }
+            }
+            if (elements.length > 1) {
+                chemicalReaction(elements, position_x, position_y);
             }
         }
         elements_x = [];
