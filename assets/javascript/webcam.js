@@ -10,6 +10,7 @@ const constraints = {
     video: { facingMode: 'environment' },
 };
 
+// 元素のデータ
 const elements_data = [{
         abbr: 'H',
         name: 'Hydrogen',
@@ -103,11 +104,13 @@ const elements_data = [{
     },
 ];
 
+// 元素を描く
 function drawElement(ctx, x, y, scale, color, name) {
     ctx.beginPath();
     ctx.arc(x, y, scale / 2.5, 0, 2 * Math.PI, false);
     ctx.fillStyle = color;
     ctx.fill();
+    // 文字はダークブルー
     ctx.fillStyle = '#191970';
     ctx.font = '36px serif';
     ctx.fillText(name, x - scale / 2, y + scale / 2);
@@ -228,11 +231,11 @@ let processor = {
                         centor_y,
                         marker_height,
                         elements_data[markers[i].id].colorcode,
-                        elements_data[markers[i].id].name
+                        elements_data[markers[i].id].abbr
                     );
                 }
-                elements_x.add(centor_x);
-                elements_y.add(centor_y);
+                elements_x.push(centor_x);
+                elements_y.push(centor_y);
                 centor_x = 0;
                 centor_y = 0;
             }
@@ -242,15 +245,18 @@ let processor = {
                 dist =
                     (elements_x[i] - elements_x[j]) * (elements_x[i] - elements_x[j]) +
                     (elements_y[i] - elements_y[j]) * (elements_y[i] - elements_y[j]);
+                // 2点間の距離でしきい値より小さければ反応する
                 if (dist < 5000) {
                     if (markers[i].id < markers[j].id) {
-                        cemicalReaction(markers[i].id, markers[j].id);
+                        chemicalReaction(markers[i].id, markers[j].id);
                     } else {
-                        cemicalReaction(markers[j].id, markers[i].id);
+                        chemicalReaction(markers[j].id, markers[i].id);
                     }
                 }
             }
         }
+        elements_x = [];
+        elements_y = [];
     },
 };
 
