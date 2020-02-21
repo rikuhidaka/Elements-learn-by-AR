@@ -161,8 +161,8 @@ function chemicalReaction() {}
 
 var count = 0;
 
-function chemicalReaction(closeElements){
-    if(closeElements[0] == 'S' && closeElements[1] == 'O2') console.log('S + O2 -> SO2');
+function chemicalReaction(ctx, closeElements, position_x, position_y) {
+    if (closeElements[0] == 'S' && closeElements[1] == 'O2') console.log('S + O2 -> SO2');
 }
 
 // webcamera → video
