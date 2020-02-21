@@ -104,6 +104,10 @@ const elements_data = [{
     },
 ];
 
+function distance(x0, y0, x1, y1) {
+    return Math.sqrt((x0 - x1) * (x0 - x1) + (y0 - y1) * (y0 - y1));
+}
+
 // 元素を描く
 function drawElement(ctx, x, y, scale, color, name) {
     ctx.beginPath();
@@ -117,23 +121,24 @@ function drawElement(ctx, x, y, scale, color, name) {
 }
 
 // help me!!!!!!!!!!!!!!!!!!!!!!!!
-function chemicalReaction(id_0, id_1) {
-    var element_0 = elements_data[id_0].abbr;
-    var element_1 = elements_data[id_1].abbr;
-    switch (element_0) {
+function chemicalReaction(element_0, elemnet_1, position_x, position_y) {
+    var name_0 = elements_data[element_0.id].abbr;
+    var name_1 = elements_data[elemnet_1.id].abbr;
+    switch (name_0) {
         case 'H':
-            switch (element_1) {
+            switch (name_1) {
                 case 'H':
+                    drawElement();
                     break;
 
                 default:
-                    console.log(element_0 + ' × ' + element_1 + ' is not chemical reaction');
+                    console.log(name_0 + ' × ' + name_1 + ' is not chemical reaction');
                     break;
             }
             break;
 
         case 'C':
-            switch (element_1) {
+            switch (name_1) {
                 case 'C':
                     break;
 
@@ -142,7 +147,7 @@ function chemicalReaction(id_0, id_1) {
             }
 
         default:
-            console.log(element_0 + ' × ' + element_1 + ' is not chemical reaction');
+            console.log(name_0 + ' × ' + name_1 + ' is not chemical reaction');
             break;
     }
 }
@@ -218,10 +223,17 @@ let processor = {
             if (typeof markers[i] === 'undefined') {
                 console.log('undefined');
             } else {
-                marker_width = markers[i].corners[2].y - markers[i].corners[0].y;
-                marker_height = markers[i].corners[2].x - markers[i].corners[0].x;
-                centor_x = markers[i].corners[0].x + marker_width / 2;
-                centor_y = markers[i].corners[0].y + marker_height / 2;
+                if (markers[i].corners[2].y - markers[i].corners[0].y >= 0) {
+                    marker_width = markers[i].corners[2].y - markers[i].corners[0].y;
+                    marker_height = markers[i].corners[2].x - markers[i].corners[0].x;
+                    centor_x = markers[i].corners[0].x + marker_width / 2;
+                    centor_y = markers[i].corners[0].y + marker_height / 2;
+                } else {
+                    marker_width = markers[i].corners[0].y - markers[i].corners[2].y;
+                    marker_height = markers[i].corners[0].x - markers[i].corners[2].x;
+                    centor_x = markers[i].corners[2].x + marker_width / 2;
+                    centor_y = markers[i].corners[2].y + marker_height / 2;
+                }
 
                 $('#scene').append('<p>id:' + markers[i].id + '</br>x:' + centor_x + ', y:' + centor_y + '</p>');
                 if (elements_data[markers[i].id]) {
@@ -240,19 +252,21 @@ let processor = {
                 centor_y = 0;
             }
         }
+        var position_x,
+            position_y,
+            elements = [];
         for (let i = 0; i < elements_x.length; i++) {
-            for (let j = i + 1; j < elements_x.length; j++) {
-                dist =
-                    (elements_x[i] - elements_x[j]) * (elements_x[i] - elements_x[j]) +
-                    (elements_y[i] - elements_y[j]) * (elements_y[i] - elements_y[j]);
-                // 2点間の距離でしきい値より小さければ反応する
-                if (dist < 5000) {
-                    if (markers[i].id < markers[j].id) {
-                        chemicalReaction(markers[i].id, markers[j].id);
-                    } else {
-                        chemicalReaction(markers[j].id, markers[i].id);
+            elements.push(elements_data[markers[i].id].abbr);
+            for (let j = 0; j < elements_x.length; j++) {
+                if (i != j) {
+                    // 2点間の距離でしきい値より小さければ反応する
+                    if (distance(elements_x[i], elements_y[i], elements_x[j], elements_y[j]) < 80) {
+                        elements.push(elements_data[markers[j].id].abbr);
                     }
                 }
+            }
+            if (elements.length > 1) {
+                chemicalReaction(elements, position_x, position_y);
             }
         }
         elements_x = [];
