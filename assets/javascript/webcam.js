@@ -157,12 +157,53 @@ function drawElement(ctx, x, y, scale, color, name) {
 }
 
 // help me!!!!!!!!!!!!!!!!!!!!!!!!
-function chemicalReaction() {}
 
 var count = 0;
 
 function chemicalReaction(ctx, closeElements, position_x, position_y) {
-    if (closeElements[0] == 'S' && closeElements[1] == 'O2') console.log('S + O2 -> SO2');
+    for(i=0;i<closeElements.length;i++){
+        console.log(closeElements[i] + i);
+        
+    }
+
+    if (closeElements[0] == 'S' && closeElements[1] == 'O2'){
+        console.log('S + O2 -> SO2');
+        drawElement(ctx,position_x,position_y,80,'#ec5210','SO2');
+    } 
+    if (closeElements[0] == 'H2' && closeElements[1] == 'H2' && closeElements[2] == 'O2'){
+        console.log('2H2 + O2 -> 2H2O');
+        drawElement(ctx,position_x,position_y,80,'#ff7f7f','2H2O');
+    } 
+    if (closeElements[0] == 'C' && closeElements[1] == 'O2'){
+        console.log('C + O2 -> CO2');
+        drawElement(ctx,position_x,position_y,80,'#7f0000','CO2');
+    } 
+    if (closeElements[0] == 'Fe' && closeElements[1] == 'S'){
+        console.log('Fe + S -> FeS');
+        drawElement(ctx,position_x,position_y,80,'#ec7510','FeS');
+    } 
+    if (closeElements[0] == 'Fe' && closeElements[1] == 'Fe' && closeElements[2] == 'Fe' && closeElements[3] == 'O2' && closeElements[4] == 'O2'){
+        console.log('3Fe + 2O2 -> Fe3O4');
+        drawElement(ctx,position_x,position_y,80,'#ff2200','Fe3O4');
+    }
+    if (closeElements[0] == 'Cu' && closeElements[1] == 'S'){
+        console.log('Cu + S -> CuS');
+        drawElement(ctx,position_x,position_y,80,'#d6871f','CuS');
+    }
+    if (closeElements[0] == 'Cu' && closeElements[1] == 'Cl2'){
+        console.log('Cu + Cl2 -> CuCl2');
+        drawElement(ctx,position_x,position_y,80,'#829b28','CuCl2');
+    }
+    if (closeElements[0] == 'Cu' && closeElements[1] == 'Cu' && closeElements[2] == 'O2'){
+        console.log('2Cu + O2 -> 2CuO');
+        drawElement(ctx,position_x,position_y,80,'#E2340F','2CuO');
+    }
+    if (closeElements[0] == 'Mg' && closeElements[1] == 'Mg' && closeElements[2] == 'O2'){
+        console.log('2Mg + O2 -> 2MgO');
+        drawElement(ctx,position_x,position_x,80,'#d67f17','2MgO');
+    }   
+
+
 }
 
 // webcamera → video
@@ -224,7 +265,7 @@ let processor = {
         var markers = this.detector.detect(imageData);
         var dist;
         // console.log(markers);
-        // $('#scene').empty();
+        $('#scene').empty();
         var centor_x,
             centor_y,
             scale,
@@ -232,7 +273,6 @@ let processor = {
             marker_height,
             elements_x = [],
             elements_y = [];
-
         for (let i = 0; i < markers.length; i++) {
             if (typeof markers[i] === 'undefined') {
                 console.log('undefined');
@@ -254,6 +294,7 @@ let processor = {
                         elements_data[markers[i].id].colorcode,
                         elements_data[markers[i].id].abbr
                     );
+                    console.log(scale);
                 }
                 elements_x.push(centor_x);
                 elements_y.push(centor_y);
@@ -261,9 +302,9 @@ let processor = {
                 centor_y = 0;
             }
         }
-        var position_x = 0,
+        var elements = [],
+            position_x = 0,
             position_y = 0,
-            elements = [],
             near_elements_x = [],
             near_elements_y = [];
 
@@ -278,9 +319,9 @@ let processor = {
                 }
             }
             if (elements.length > 1) {
-                for (let i = 0; i < elements.length; i++) {
-                    position_x += near_elements_x[i];
-                    position_y += near_elements_y[i];
+                for (let k = 0; k < elements.length; k++) {
+                    position_x += near_elements_x[k];
+                    position_y += near_elements_y[k];
                 }
 
                 chemicalReaction(this.context, elements.sort(), position_x, position_y);
