@@ -138,25 +138,25 @@ function drawElement(ctx, x, y, scale, color, name) {
 }
 
 function chemicalReaction(ctx, closeElements, position_x, position_y) {
-    for (i = 0; i < closeElements.length; i++) {
-        console.log(closeElements[i] + i);
-    }
-
     if (closeElements[0] == 6 && closeElements[1] == 14) {
         console.log('S + O2 -> SO2');
         drawElement(ctx, position_x, position_y, 80, '#ec5210', 'SO2');
+        return true;
     }
     if (closeElements[0] == 14 && closeElements[1] == 15 && closeElements[2] == 15) {
         console.log('2H2 + O2 -> 2H2O');
         drawElement(ctx, position_x, position_y, 80, '#ff7f7f', '2H2O');
+        return true;
     }
     if (closeElements[0] == 1 && closeElements[1] == 14) {
         console.log('C + O2 -> CO2');
         drawElement(ctx, position_x, position_y, 80, '#7f0000', 'CO2');
+        return true;
     }
     if (closeElements[0] == 6 && closeElements[1] == 9) {
         console.log('Fe + S -> FeS');
         drawElement(ctx, position_x, position_y, 80, '#ec7510', 'FeS');
+        return true;
     }
     if (
         closeElements[0] == 9 &&
@@ -167,23 +167,30 @@ function chemicalReaction(ctx, closeElements, position_x, position_y) {
     ) {
         console.log('3Fe + 2O2 -> Fe3O4');
         drawElement(ctx, position_x, position_y, 80, '#ff2200', 'Fe3O4');
+        return true;
     }
     if (closeElements[0] == 6 && closeElements[1] == 10) {
         console.log('Cu + S -> CuS');
         drawElement(ctx, position_x, position_y, 80, '#d6871f', 'CuS');
+        return true;
     }
     if (closeElements[0] == 10 && closeElements[1] == 16) {
         console.log('Cu + Cl2 -> CuCl2');
         drawElement(ctx, position_x, position_y, 80, '#829b28', 'CuCl2');
+        return true;
     }
     if (closeElements[0] == 10 && closeElements[1] == 10 && closeElements[2] == 14) {
         console.log('2Cu + O2 -> 2CuO');
         drawElement(ctx, position_x, position_y, 80, '#E2340F', '2CuO');
+        return true;
     }
     if (closeElements[0] == 5 && closeElements[1] == 5 && closeElements[2] == 14) {
         console.log('2Mg + O2 -> 2MgO');
         drawElement(ctx, position_x, position_x, 80, '#d67f17', '2MgO');
+        return true;
     }
+
+    return false;
 }
 
 // webcamera → video
@@ -244,81 +251,100 @@ let processor = {
         var dist;
         // console.log(markers);
         $('#scene').empty();
-        var centor_x,
-            centor_y,
-            scale,
-            marker_width,
-            marker_height,
-            elements_x = [],
-            elements_y = [];
+        var elements = [];
+
         for (let i = 0; i < markers.length; i++) {
-            if (typeof markers[i] === 'undefined') {
-                console.log('undefined');
-            } else if (markers[i].id >= elements_data.length) {
-                break;
-            } else {
-                marker_width = Math.abs(markers[i].corners[2].y - markers[i].corners[0].y);
-                marker_height = Math.abs(markers[i].corners[2].x - markers[i].corners[0].x);
-                centor_x = (markers[i].corners[2].x + markers[i].corners[0].x) / 2;
-                centor_y = (markers[i].corners[2].y + markers[i].corners[0].y) / 2;
-
-                scale = Math.max(marker_height, marker_width);
-
-                $('#scene').append('<p>id:' + markers[i].id + '</br>x:' + centor_x + ', y:' + centor_y + '</p>');
-                if (elements_data[markers[i].id]) {
-                    drawElement(
-                        this.context,
-                        centor_x,
-                        centor_y,
-                        scale,
-                        elements_data[markers[i].id].colorcode,
-                        elements_data[markers[i].id].abbr
-                    );
-                    //console.log(scale);
-                }
-                elements_x.push(centor_x);
-                elements_y.push(centor_y);
-                centor_x = 0;
-                centor_y = 0;
+            if (markers[i].id < elements_data.length) {
+                let marker_width = Math.abs(markers[i].corners[2].y - markers[i].corners[0].y);
+                let marker_height = Math.abs(markers[i].corners[2].x - markers[i].corners[0].x);
+                let marker_data = {
+                    id: markers[i].id,
+                    x: (markers[i].corners[2].x + markers[i].corners[0].x) / 2,
+                    y: (markers[i].corners[2].y + markers[i].corners[0].y) / 2,
+                    scale: Math.max(marker_height, marker_width),
+                };
+                $('#scene').append(
+                    '<p>id:' + markers[i].id + '</br>x:' + marker_data.x + ', y:' + marker_data.y + '</p>'
+                );
+                elements.push(marker_data);
             }
         }
-        var elements = [],
-            position_x = 0,
+        var position_x = 0,
             position_y = 0,
-            near_elements_x = [],
-            near_elements_y = [];
+            numbers = [],
+            near_elements = [];
 
-        for (let i = 0; i < elements_x.length; i++) {
-            elements.push(markers[i].id);
-            for (let j = 0; j < elements_x.length; j++) {
+        for (let i = 0; i < elements.length; i++) {
+            let near_element = {
+                x: elements[i].x,
+                y: elements[i].y,
+                id: elements[i].id,
+            };
+            numbers.push(i);
+            near_elements.push(near_element);
+            for (let j = 0; j < elements.length; j++) {
                 if (i != j) {
                     // 2点間の距離でしきい値より小さければ反応する
-                    if (distance(elements_x[i], elements_y[i], elements_x[j], elements_y[j]) < 300) {
-                        elements.push(markers[j].id);
+                    if (distance(elements[i].x, elements[i].y, elements[j].x, elements[j].y) < 300) {
+                        let element = {
+                            x: elements[j].x,
+                            y: elements[j].y,
+                            id: elements[j].id,
+                        };
+                        numbers.push(j);
+                        near_elements.push(element);
                     }
                 }
             }
             // console.log(elements);
-            if (elements.length > 1) {
+            if (near_elements.length > 1) {
                 for (let k = 0; k < elements.length; k++) {
-                    position_x += near_elements_x[k];
-                    position_y += near_elements_y[k];
+                    position_x += near_elements[k].x;
+                    position_y += near_elements[k].y;
                 }
-                chemicalReaction(
-                    this.context,
-                    elements.sort((a, b) => a - b),
-                    position_x,
-                    position_y
-                );
+                let Ids = [];
+                near_elements.forEach((element) => {
+                    Ids.push(element.id);
+                });
+
+                if (
+                    chemicalReaction(
+                        this.context,
+                        Ids.sort((a, b) => a - b),
+                        position_x / near_elements.length,
+                        position_y / near_elements.length
+                    ) === true
+                ) {
+                    numbers.sort(function(a, b) {
+                        return a < b ? 1 : -1;
+                    });
+                    console.log(elements.length);
+                    numbers.forEach((number) => {
+                        if (number == 0) {
+                            elements.shift();
+                        } else {
+                            elements.splice(number, number);
+                        }
+                    });
+                    console.log(numbers);
+                }
             }
-            elements = [];
+            numbers = [];
+            near_elements = [];
             position_x = 0;
             position_y = 0;
         }
-        near_elements_x = [];
-        near_elements_y = [];
-        elements_x = [];
-        elements_y = [];
+        elements.forEach((element) => {
+            drawElement(
+                this.context,
+                element.x,
+                element.y,
+                element.scale,
+                elements_data[element.id].colorcode,
+                elements_data[element.id].abbr
+            );
+        });
+        elements = [];
     },
 };
 
