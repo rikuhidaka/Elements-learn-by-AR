@@ -138,49 +138,52 @@ function drawElement(ctx, x, y, scale, color, name) {
 }
 
 function chemicalReaction(ctx, closeElements, position_x, position_y) {
-    for(i=0;i<closeElements.length;i++){
+    for (i = 0; i < closeElements.length; i++) {
         console.log(closeElements[i] + i);
-        
     }
 
-    if (closeElements[0] == 'S' && closeElements[1] == 'O2'){
+    if (closeElements[0] == 'S' && closeElements[1] == 'O2') {
         console.log('S + O2 -> SO2');
-        drawElement(ctx,position_x,position_y,80,'#ec5210','SO2');
-    } 
-    if (closeElements[0] == 'H2' && closeElements[1] == 'H2' && closeElements[2] == 'O2'){
+        drawElement(ctx, position_x, position_y, 80, '#ec5210', 'SO2');
+    }
+    if (closeElements[0] == 'H2' && closeElements[1] == 'H2' && closeElements[2] == 'O2') {
         console.log('2H2 + O2 -> 2H2O');
-        drawElement(ctx,position_x,position_y,80,'#ff7f7f','2H2O');
-    } 
-    if (closeElements[0] == 'C' && closeElements[1] == 'O2'){
+        drawElement(ctx, position_x, position_y, 80, '#ff7f7f', '2H2O');
+    }
+    if (closeElements[0] == 'C' && closeElements[1] == 'O2') {
         console.log('C + O2 -> CO2');
-        drawElement(ctx,position_x,position_y,80,'#7f0000','CO2');
-    } 
-    if (closeElements[0] == 'Fe' && closeElements[1] == 'S'){
+        drawElement(ctx, position_x, position_y, 80, '#7f0000', 'CO2');
+    }
+    if (closeElements[0] == 'Fe' && closeElements[1] == 'S') {
         console.log('Fe + S -> FeS');
-        drawElement(ctx,position_x,position_y,80,'#ec7510','FeS');
-    } 
-    if (closeElements[0] == 'Fe' && closeElements[1] == 'Fe' && closeElements[2] == 'Fe' && closeElements[3] == 'O2' && closeElements[4] == 'O2'){
+        drawElement(ctx, position_x, position_y, 80, '#ec7510', 'FeS');
+    }
+    if (
+        closeElements[0] == 'Fe' &&
+        closeElements[1] == 'Fe' &&
+        closeElements[2] == 'Fe' &&
+        closeElements[3] == 'O2' &&
+        closeElements[4] == 'O2'
+    ) {
         console.log('3Fe + 2O2 -> Fe3O4');
-        drawElement(ctx,position_x,position_y,80,'#ff2200','Fe3O4');
+        drawElement(ctx, position_x, position_y, 80, '#ff2200', 'Fe3O4');
     }
-    if (closeElements[0] == 'Cu' && closeElements[1] == 'S'){
+    if (closeElements[0] == 'Cu' && closeElements[1] == 'S') {
         console.log('Cu + S -> CuS');
-        drawElement(ctx,position_x,position_y,80,'#d6871f','CuS');
+        drawElement(ctx, position_x, position_y, 80, '#d6871f', 'CuS');
     }
-    if (closeElements[0] == 'Cu' && closeElements[1] == 'Cl2'){
+    if (closeElements[0] == 'Cu' && closeElements[1] == 'Cl2') {
         console.log('Cu + Cl2 -> CuCl2');
-        drawElement(ctx,position_x,position_y,80,'#829b28','CuCl2');
+        drawElement(ctx, position_x, position_y, 80, '#829b28', 'CuCl2');
     }
-    if (closeElements[0] == 'Cu' && closeElements[1] == 'Cu' && closeElements[2] == 'O2'){
+    if (closeElements[0] == 'Cu' && closeElements[1] == 'Cu' && closeElements[2] == 'O2') {
         console.log('2Cu + O2 -> 2CuO');
-        drawElement(ctx,position_x,position_y,80,'#E2340F','2CuO');
+        drawElement(ctx, position_x, position_y, 80, '#E2340F', '2CuO');
     }
-    if (closeElements[0] == 'Mg' && closeElements[1] == 'Mg' && closeElements[2] == 'O2'){
+    if (closeElements[0] == 'Mg' && closeElements[1] == 'Mg' && closeElements[2] == 'O2') {
         console.log('2Mg + O2 -> 2MgO');
-        drawElement(ctx,position_x,position_x,80,'#d67f17','2MgO');
-    }   
-
-
+        drawElement(ctx, position_x, position_x, 80, '#d67f17', '2MgO');
+    }
 }
 
 // webcamera → video
@@ -251,6 +254,8 @@ let processor = {
         for (let i = 0; i < markers.length; i++) {
             if (typeof markers[i] === 'undefined') {
                 console.log('undefined');
+            } else if (markers[i].id >= elements_data.length) {
+                break;
             } else {
                 marker_width = Math.abs(markers[i].corners[2].y - markers[i].corners[0].y);
                 marker_height = Math.abs(markers[i].corners[2].x - markers[i].corners[0].x);
