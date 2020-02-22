@@ -16,98 +16,84 @@ const elements_data = [{
         name: 'Hydrogen',
         color: 'white',
         colorcode: '#ffffff',
-        number: 1,
     },
     {
         abbr: 'C',
         name: 'Carbon',
         color: 'black',
         colorcode: '#000000',
-        number: 6,
     },
     {
         abbr: 'N',
         name: 'Nitrogen',
         color: 'blue',
         colorcode: '#0000ff',
-        number: 7,
     },
     {
         abbr: 'O',
         name: 'Oxygen',
         color: 'red',
         colorcode: '#ff0000',
-        number: 8,
     },
     {
         abbr: 'Na',
         name: 'Sodium',
         color: 'slateblue',
         colorcode: '#6a5acd',
-        number: 11,
     },
     {
         abbr: 'Mg',
         name: 'Magnesium',
         color: 'greenyellow',
         colorcode: 'adff2f',
-        number: 12,
     },
     {
         abbr: 'S',
         name: 'Sulfur',
         color: 'goldenrod',
         colorcode: '#daa520',
-        number: 16,
     },
     {
         abbr: 'Cl',
         name: 'Chlorine',
         color: 'limegreen',
         colorcode: '32cd32',
-        number: 17,
     },
     {
         abbr: 'Ca',
         name: 'Calcium',
         color: 'lawngreen',
         colorcode: '#7cfc00',
-        number: 20,
     },
     {
         abbr: 'Fe',
         name: 'Iron',
         color: 'orangered',
         colorcode: 'ff4500',
-        number: 26,
     },
     {
         abbr: 'Cu',
         name: 'Copper',
         color: 'chocolate',
         colorcode: '#d2691e',
-        number: 29,
     },
     {
         abbr: 'Zn',
         name: 'Zinc',
         color: 'steelblue',
         colorcode: '#4682b4',
-        number: 30,
     },
     {
         abbr: 'Ag',
         name: 'Silver',
         color: 'lavender',
         colorcode: '#e6e6fa',
-        number: 47,
     },
     {
         abbr: 'Ba',
         name: 'Barium',
         color: 'olivedrab',
         colorcode: '#6b8e23',
-        number: 56,
     },
     {
         abbr: 'O2',
@@ -141,12 +127,7 @@ function distance(x0, y0, x1, y1) {
 
 // 元素を描く
 function drawElement(ctx, x, y, scale, color, name) {
-    if (count < 100) {
-        count = 0;
-        ctx.beginPath();
-    } else {
-        count++;
-    }
+    ctx.beginPath();
     ctx.arc(x, y, scale / 2.5, 0, 2 * Math.PI, false);
     ctx.fillStyle = color;
     ctx.fill();
@@ -155,11 +136,6 @@ function drawElement(ctx, x, y, scale, color, name) {
     ctx.font = '36px serif';
     ctx.fillText(name, x - scale / 2, y + scale / 2);
 }
-
-// help me!!!!!!!!!!!!!!!!!!!!!!!!
-function chemicalReaction() {}
-
-var count = 0;
 
 function chemicalReaction(ctx, closeElements, position_x, position_y) {
     if (closeElements[0] == 'S' && closeElements[1] == 'O2') console.log('S + O2 -> SO2');
@@ -215,8 +191,6 @@ let processor = {
 
     // loop
     computeFrame: function() {
-        // canvasの初期化
-        this.context.clearRect(0, 0, this.width, this.height);
         // カメラから取得したデータをcanvasに書き込む
         this.context.drawImage(this.video, 0, 0, this.width, this.height);
         var imageData = this.context.getImageData(0, 0, this.width, this.height);
@@ -224,7 +198,7 @@ let processor = {
         var markers = this.detector.detect(imageData);
         var dist;
         // console.log(markers);
-        // $('#scene').empty();
+        $('#scene').empty();
         var centor_x,
             centor_y,
             scale,
@@ -277,18 +251,18 @@ let processor = {
                     }
                 }
             }
+            console.log(elements);
             if (elements.length > 1) {
-                for (let i = 0; i < elements.length; i++) {
-                    position_x += near_elements_x[i];
-                    position_y += near_elements_y[i];
+                for (let k = 0; k < elements.length; k++) {
+                    position_x += near_elements_x[k];
+                    position_y += near_elements_y[k];
                 }
-
                 chemicalReaction(this.context, elements.sort(), position_x, position_y);
             }
+            elements = [];
             position_x = 0;
             position_y = 0;
         }
-        elements = [];
         near_elements_x = [];
         near_elements_y = [];
         elements_x = [];
