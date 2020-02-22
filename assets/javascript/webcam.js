@@ -280,6 +280,7 @@ let processor = {
                 x: elements[i].x,
                 y: elements[i].y,
                 id: elements[i].id,
+                scale: elements[i].scale,
             };
             numbers.push(i);
             near_elements.push(near_element);
@@ -291,6 +292,7 @@ let processor = {
                             x: elements[j].x,
                             y: elements[j].y,
                             id: elements[j].id,
+                            scale: elements[j].scale,
                         };
                         numbers.push(j);
                         near_elements.push(element);
@@ -300,6 +302,7 @@ let processor = {
             // console.log(elements);
             if (near_elements.length > 1) {
                 for (let k = 0; k < elements.length; k++) {
+                    console.log(near_elements[k].scale);
                     position_x += near_elements[k].x;
                     position_y += near_elements[k].y;
                     element_scale += near_elements[k].scale;
@@ -313,7 +316,7 @@ let processor = {
                     chemicalReaction(
                         this.context,
                         Ids.sort((a, b) => a - b),
-                        element_scale,
+                        element_scale / near_elements.length,
                         position_x / near_elements.length,
                         position_y / near_elements.length
                     ) === true
@@ -321,7 +324,7 @@ let processor = {
                     numbers.sort(function(a, b) {
                         return a < b ? 1 : -1;
                     });
-                    console.log(elements.length);
+                    // console.log(elements.length);
                     numbers.forEach((number) => {
                         if (number == 0) {
                             elements.shift();
@@ -329,7 +332,7 @@ let processor = {
                             elements.splice(number, number);
                         }
                     });
-                    console.log(numbers);
+                    // console.log(element_scale);
                 }
             }
             numbers = [];
