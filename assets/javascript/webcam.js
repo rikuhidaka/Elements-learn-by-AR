@@ -142,45 +142,45 @@ function chemicalReaction(ctx, closeElements, position_x, position_y) {
         console.log(closeElements[i] + i);
     }
 
-    if (closeElements[0] == 'O2' && closeElements[1] == 'S') {
+    if (closeElements[0] == 6 && closeElements[1] == 14) {
         console.log('S + O2 -> SO2');
         drawElement(ctx, position_x, position_y, 80, '#ec5210', 'SO2');
     }
-    if (closeElements[0] == 'H2' && closeElements[1] == 'H2' && closeElements[2] == 'O2') {
+    if (closeElements[0] == 14 && closeElements[1] == 15 && closeElements[2] == 15) {
         console.log('2H2 + O2 -> 2H2O');
         drawElement(ctx, position_x, position_y, 80, '#ff7f7f', '2H2O');
     }
-    if (closeElements[0] == 'C' && closeElements[1] == 'O2') {
+    if (closeElements[0] == 1 && closeElements[1] == 14) {
         console.log('C + O2 -> CO2');
         drawElement(ctx, position_x, position_y, 80, '#7f0000', 'CO2');
     }
-    if (closeElements[0] == 'Fe' && closeElements[1] == 'S') {
+    if (closeElements[0] == 6 && closeElements[1] == 9) {
         console.log('Fe + S -> FeS');
         drawElement(ctx, position_x, position_y, 80, '#ec7510', 'FeS');
     }
     if (
-        closeElements[0] == 'Fe' &&
-        closeElements[1] == 'Fe' &&
-        closeElements[2] == 'Fe' &&
-        closeElements[3] == 'O2' &&
-        closeElements[4] == 'O2'
+        closeElements[0] == 9 &&
+        closeElements[1] == 9 &&
+        closeElements[2] == 9 &&
+        closeElements[3] == 14 &&
+        closeElements[4] == 14
     ) {
         console.log('3Fe + 2O2 -> Fe3O4');
         drawElement(ctx, position_x, position_y, 80, '#ff2200', 'Fe3O4');
     }
-    if (closeElements[0] == 'Cu' && closeElements[1] == 'S') {
+    if (closeElements[0] == 6 && closeElements[1] == 10) {
         console.log('Cu + S -> CuS');
         drawElement(ctx, position_x, position_y, 80, '#d6871f', 'CuS');
     }
-    if (closeElements[0] == 'Cu' && closeElements[1] == 'Cl2') {
+    if (closeElements[0] == 10 && closeElements[1] == 16) {
         console.log('Cu + Cl2 -> CuCl2');
         drawElement(ctx, position_x, position_y, 80, '#829b28', 'CuCl2');
     }
-    if (closeElements[0] == 'Cu' && closeElements[1] == 'Cu' && closeElements[2] == 'O2') {
+    if (closeElements[0] == 10 && closeElements[1] == 10 && closeElements[2] == 14) {
         console.log('2Cu + O2 -> 2CuO');
         drawElement(ctx, position_x, position_y, 80, '#E2340F', '2CuO');
     }
-    if (closeElements[0] == 'Mg' && closeElements[1] == 'Mg' && closeElements[2] == 'O2') {
+    if (closeElements[0] == 5 && closeElements[1] == 5 && closeElements[2] == 14) {
         console.log('2Mg + O2 -> 2MgO');
         drawElement(ctx, position_x, position_x, 80, '#d67f17', '2MgO');
     }
@@ -289,12 +289,12 @@ let processor = {
             near_elements_y = [];
 
         for (let i = 0; i < elements_x.length; i++) {
-            elements.push(elements_data[markers[i].id].abbr);
+            elements.push(markers[i].id);
             for (let j = 0; j < elements_x.length; j++) {
                 if (i != j) {
                     // 2点間の距離でしきい値より小さければ反応する
                     if (distance(elements_x[i], elements_y[i], elements_x[j], elements_y[j]) < 150) {
-                        elements.push(elements_data[markers[j].id].abbr);
+                        elements.push(markers[j].id);
                     }
                 }
             }
@@ -304,7 +304,12 @@ let processor = {
                     position_x += near_elements_x[k];
                     position_y += near_elements_y[k];
                 }
-                chemicalReaction(this.context, elements.sort(), position_x, position_y);
+                chemicalReaction(
+                    this.context,
+                    elements.sort((a, b) => a - b),
+                    position_x,
+                    position_y
+                );
             }
             elements = [];
             position_x = 0;
