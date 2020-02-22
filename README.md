@@ -1,8 +1,8 @@
-# Elements Learn by AR
-webARによる元素の勉強教材です
+# Elements learn by AR
+webARによる元素の勉強教材です。
 
 ## 使い方
-[ここ](https://rikuhidaka.github.io/AR-study-element/)にアクセスすることで使えます。
+[ここ](https://rikuhidaka.github.io/Elements-learn-by-AR/)にアクセスすることで使えます。
 
 マーカーは[こちら](http://diogok.net/js-aruco-markers/index.html)にまとめられています。ダウンロードして使ってください。
 
