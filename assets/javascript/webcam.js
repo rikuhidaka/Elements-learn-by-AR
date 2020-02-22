@@ -293,7 +293,7 @@ let processor = {
             for (let j = 0; j < elements_x.length; j++) {
                 if (i != j) {
                     // 2点間の距離でしきい値より小さければ反応する
-                    if (distance(elements_x[i], elements_y[i], elements_x[j], elements_y[j]) < 150) {
+                    if (distance(elements_x[i], elements_y[i], elements_x[j], elements_y[j]) < 300) {
                         elements.push(markers[j].id);
                     }
                 }
