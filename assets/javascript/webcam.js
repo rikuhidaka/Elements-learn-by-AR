@@ -140,22 +140,26 @@ function drawElement(ctx, x, y, scale, color, name) {
 function chemicalReaction(ctx, closeElements, scale, position_x, position_y) {
     if (closeElements[0] == 6 && closeElements[1] == 14) {
         console.log('S + O2 -> SO2');
-        drawElement(ctx, position_x, position_y, scale, '#ec5210', 'SO2');
+        //drawElement(ctx, position_x, position_y, scale, '#ec5210', 'SO2');
+        drawElement(ctx, position_x, position_y, 80, '#ec5210', 'SO2');
         return true;
     }
     if (closeElements[0] == 14 && closeElements[1] == 15 && closeElements[2] == 15) {
         console.log('2H2 + O2 -> 2H2O');
-        drawElement(ctx, position_x, position_y, scale, '#ff7f7f', '2H2O');
+        //drawElement(ctx, position_x, position_y, scale, '#ff7f7f', '2H2O');
+        drawElement(ctx, position_x, position_y, 80, '#ff7f7f', '2H2O');
         return true;
     }
     if (closeElements[0] == 1 && closeElements[1] == 14) {
         console.log('C + O2 -> CO2');
-        drawElement(ctx, position_x, position_y, scale, '#7f0000', 'CO2');
+        // drawElement(ctx, position_x, position_y, scale, '#7f0000', 'CO2');
+        drawElement(ctx, position_x, position_y, 80, '#7f0000', 'CO2');
         return true;
     }
     if (closeElements[0] == 6 && closeElements[1] == 9) {
         console.log('Fe + S -> FeS');
-        drawElement(ctx, position_x, position_y, scale, '#ec7510', 'FeS');
+        // drawElement(ctx, position_x, position_y, scale, '#ec7510', 'FeS');
+        drawElement(ctx, position_x, position_y, 80, '#ec7510', 'FeS');
         return true;
     }
     if (
@@ -166,27 +170,32 @@ function chemicalReaction(ctx, closeElements, scale, position_x, position_y) {
         closeElements[4] == 14
     ) {
         console.log('3Fe + 2O2 -> Fe3O4');
-        drawElement(ctx, position_x, position_y, scale, '#ff2200', 'Fe3O4');
+        // drawElement(ctx, position_x, position_y, scale, '#ff2200', 'Fe3O4');
+        drawElement(ctx, position_x, position_y, 80, '#ff2200', 'Fe3O4');
         return true;
     }
     if (closeElements[0] == 6 && closeElements[1] == 10) {
         console.log('Cu + S -> CuS');
-        drawElement(ctx, position_x, position_y, scale, '#d6871f', 'CuS');
+        // drawElement(ctx, position_x, position_y, scale, '#d6871f', 'CuS');
+        drawElement(ctx, position_x, position_y, 80, '#d6871f', 'CuS');
         return true;
     }
     if (closeElements[0] == 10 && closeElements[1] == 16) {
         console.log('Cu + Cl2 -> CuCl2');
-        drawElement(ctx, position_x, position_y, scale, '#829b28', 'CuCl2');
+        // drawElement(ctx, position_x, position_y, scale, '#829b28', 'CuCl2');
+        drawElement(ctx, position_x, position_y, 80, '#d6871f', 'CuS');
         return true;
     }
     if (closeElements[0] == 10 && closeElements[1] == 10 && closeElements[2] == 14) {
         console.log('2Cu + O2 -> 2CuO');
-        drawElement(ctx, position_x, position_y, scale, '#E2340F', '2CuO');
+        // drawElement(ctx, position_x, position_y, scale, '#E2340F', '2CuO');
+        drawElement(ctx, position_x, position_y, 80, '#E2340F', '2CuO');
         return true;
     }
     if (closeElements[0] == 5 && closeElements[1] == 5 && closeElements[2] == 14) {
         console.log('2Mg + O2 -> 2MgO');
-        drawElement(ctx, position_x, position_x, scale, '#d67f17', '2MgO');
+        // drawElement(ctx, position_x, position_x, scale, '#d67f17', '2MgO');
+        drawElement(ctx, position_x, position_x, 80, '#d67f17', '2MgO');
         return true;
     }
 
