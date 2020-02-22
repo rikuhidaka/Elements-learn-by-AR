@@ -302,7 +302,7 @@ let processor = {
             // console.log(elements);
             if (near_elements.length > 1) {
                 for (let k = 0; k < elements.length; k++) {
-                    console.log(near_elements[k].scale);
+                    // console.log(near_elements[k].scale);
                     position_x += near_elements[k].x;
                     position_y += near_elements[k].y;
                     element_scale += near_elements[k].scale;
