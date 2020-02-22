@@ -142,7 +142,7 @@ function chemicalReaction(ctx, closeElements, position_x, position_y) {
         console.log(closeElements[i] + i);
     }
 
-    if (closeElements[0] == 'S' && closeElements[1] == 'O2') {
+    if (closeElements[0] == 'O2' && closeElements[1] == 'S') {
         console.log('S + O2 -> SO2');
         drawElement(ctx, position_x, position_y, 80, '#ec5210', 'SO2');
     }
@@ -274,7 +274,7 @@ let processor = {
                         elements_data[markers[i].id].colorcode,
                         elements_data[markers[i].id].abbr
                     );
-                    console.log(scale);
+                    //console.log(scale);
                 }
                 elements_x.push(centor_x);
                 elements_y.push(centor_y);
@@ -293,12 +293,12 @@ let processor = {
             for (let j = 0; j < elements_x.length; j++) {
                 if (i != j) {
                     // 2点間の距離でしきい値より小さければ反応する
-                    if (distance(elements_x[i], elements_y[i], elements_x[j], elements_y[j]) < 80) {
+                    if (distance(elements_x[i], elements_y[i], elements_x[j], elements_y[j]) < 150) {
                         elements.push(elements_data[markers[j].id].abbr);
                     }
                 }
             }
-            console.log(elements);
+            // console.log(elements);
             if (elements.length > 1) {
                 for (let k = 0; k < elements.length; k++) {
                     position_x += near_elements_x[k];
