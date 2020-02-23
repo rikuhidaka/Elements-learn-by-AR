@@ -1,5 +1,5 @@
 <!doctype HTML>
-<html>
+<html lang="ja">
 <!-- arucojs -->
 <script src="assets/javascript/aruco/aruco.js"></script>
 <script src="assets/javascript/aruco/cv.js"></script>
@@ -7,15 +7,41 @@
 <script src="assets/javascript/webcam.js"></script>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="assets/css" href="style.css">
+<link rel="stylesheet" href="assets/css/bootstrap.css">
 <title>Let`s Study Element !!</title>
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Study Element</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="true" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse show" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://github.com/rikuhidaka/Elements-learn-by-AR">github</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://www.hello-school.net/harorika102.htm">参考サイト</a>
+              </li>
+
+            </ul>
+          </div>
+    </nav>
+
     <video id="video" width="0" height="0" playsinline muted autoplay></video>
     <canvas id="canvas"></canvas>
     <div id='test'></div>
     <div id='scene'></div>
+
+
+
+    <script type="text/javascript" src="assets/javascript/jquery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/javascript/bootstrap.bundle.js"></script>
 </body>
 
 </html>
